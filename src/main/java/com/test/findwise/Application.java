@@ -42,7 +42,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.elasticsearch.client.transport.TransportClient;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
@@ -55,6 +57,7 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        Information inf = new Information();
         int i = 0;
         Gson gson = new Gson();
         
@@ -79,15 +82,13 @@ public class Application implements CommandLineRunner {
 
     
 
-
-//		repository.deleteAll();
 //        List<Fil> listFiler = new ArrayList();
 		// save a couple of customers
 //		repository.save(new Fil("Steffen-1", 5, new Date(), new Date()));
 //		repository.save(new Fil("Steffen-2", 10, new Date(), new Date()));
 
         // fetch all customers
-        System.out.println("Filer funder med findAll():");
+        System.out.println("Filer fundet med findAll():");
         System.out.println("-------------------------------");
 
         for (Fil f : repository.findAll()) {
@@ -95,25 +96,9 @@ public class Application implements CommandLineRunner {
               System.out.println("HER ER F: " + f);
               String objectInJson = gson.toJson(f);
               System.out.println("HER ER FFFF " + objectInJson);
-//
+
               HttpEntity entity = new NStringEntity(objectInJson);
-//            
-//            
-//                    System.out.println("RESPONSE ER HER: " + response.toString());
-//            HttpEntity entity = new NStringEntity(
-//                    "{\n"
-//                    + "    \"filNavn\" : \" " + f.filNavn + "\",\n"
-//                    + "    \"size\" : \"" + f.filStr + "\",\n"
-//                    + "    \"created\" : \" " + f.created + "\",\n"
-//                    + "    \"modified\" : \" " + f.modified + "\",\n"
-//                    + "}", ContentType.APPLICATION_JSON);
-            
-//            HttpEntity entity = new NStringEntity(
-//                    "{\n"
-//                    + "    \"user\" : \"Steffen3\",\n"
-//                    + "    \"post_date\" : \"2009-11-15T14:12:12\",\n"
-//                    + "    \"message\" : \"Prøver virkeligt\"\n"
-//                    + "}", ContentType.APPLICATION_JSON);
+
             
             
             
@@ -125,6 +110,9 @@ public class Application implements CommandLineRunner {
             System.out.println("HERE IS INDEXRESPONSE: " + indexResponse.toString());
             
             i++;
+            
+            inf.setInfo(indexResponse.getStatusLine().toString());
+
         }
         restClient.close();
 

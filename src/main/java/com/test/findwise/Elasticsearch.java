@@ -5,8 +5,7 @@
  */
 package com.test.findwise;
 
-import org.apache.http.HttpHost;
-import org.elasticsearch.client.RestClient;
+
 
 
 

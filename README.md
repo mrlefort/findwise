@@ -13,5 +13,4 @@ Med mere tid ville jeg lægge logikken mht Elasticsearch i sin egen klasse for a
 
 Jeg skal også bruge mere tid i Spring for virkeligt at få et godt greb om frameworket.
 
-Jeg vælger dog at aflevere nu da jeg mener at have løst opgaven og give dig en fornemmelse af den tid jeg har haft brug for, for 
-at nå så langt jeg er.
+Når det er sagt, er Elasticsearch super spændende!

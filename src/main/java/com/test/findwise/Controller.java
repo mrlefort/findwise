@@ -16,6 +16,12 @@ import org.springframework.web.client.*;
 @RestController
 public class Controller {
 
+    
+    @RequestMapping("/filer")
+    public String output(){
+        Information i = new Information();
+        return i.getInfo();
+    }
 
 }
     

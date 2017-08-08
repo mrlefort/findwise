@@ -60,57 +60,49 @@ public class Application implements CommandLineRunner {
         Information inf = new Information();
         int i = 0;
         Gson gson = new Gson();
-        
-        
-            final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+
+        final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY,
                 new UsernamePasswordCredentials("elastic", "changeme"));
 
-//           RestClient restClient = RestClient.builder(
-//                new HttpHost("localhost", 9200, "http"),
-//                new HttpHost("localhost", 9201, "http")).build();
-        
+
         RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200))
-        .setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
-            @Override
-            public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
-                return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
-            }
-        })
-        .build();
+                .setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
+                    @Override
+                    public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
+                        return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+                    }
+                })
+                .build();
 
-
-    
-
-//        List<Fil> listFiler = new ArrayList();
-		// save a couple of customers
+		//Gem "filer" til mongoDB.
 //		repository.save(new Fil("Steffen-1", 5, new Date(), new Date()));
 //		repository.save(new Fil("Steffen-2", 10, new Date(), new Date()));
+        
 
-        // fetch all customers
-        System.out.println("Filer fundet med findAll():");
-        System.out.println("-------------------------------");
+//        System.out.println("Filer fundet med findAll():");
+//        System.out.println("-------------------------------");
 
+        
+        //Henter documents fra mongoDB og  indekserer dem i Elasticsearch
         for (Fil f : repository.findAll()) {
+//            System.out.println("HER ER F: " + f);
             
-              System.out.println("HER ER F: " + f);
-              String objectInJson = gson.toJson(f);
-              System.out.println("HER ER FFFF " + objectInJson);
+            String objectInJson = gson.toJson(f);
+//            System.out.println("HER ER FFFF " + objectInJson);
 
-              HttpEntity entity = new NStringEntity(objectInJson);
+            HttpEntity entity = new NStringEntity(objectInJson);
 
-            
-            
-            
             Response indexResponse = restClient.performRequest(
                     "PUT",
-                    "/twitter/tweet/" + i +"",
+                    "/filer/fil/" + i + "",
                     Collections.<String, String>emptyMap(),
                     entity);
             System.out.println("HERE IS INDEXRESPONSE: " + indexResponse.toString());
-            
+
             i++;
-            
+
+            //Tager response Status og sætter den ind i Information
             inf.setInfo(indexResponse.getStatusLine().toString());
 
         }

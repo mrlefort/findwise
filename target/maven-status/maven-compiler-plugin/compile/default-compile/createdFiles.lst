@@ -1,7 +1,6 @@
 com\test\findwise\Application.class
-com\test\findwise\Greeting.class
-com\test\findwise\Elasticsearch.class
 com\test\findwise\Fil.class
 com\test\findwise\Controller.class
 com\test\findwise\FilRepo.class
+com\test\findwise\Information.class
 com\test\findwise\Application$1.class

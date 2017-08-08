@@ -14,6 +14,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  *
  * @author Steffen
  */
+
+//Brugt til test - bliver ikke brugt længere.
 public interface FilRepo extends MongoRepository<Fil, String> {
     public Fil findByFilNavn(String filNavn);
 }
